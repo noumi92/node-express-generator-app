@@ -3,7 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var mongoose = require('mongoose');
+var dotenv = require('dotenv');
+var Dishes = require('./models/dishes');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var dishRouter = require('./routes/dishRouter');
@@ -15,7 +17,7 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
+dotenv.config();
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -27,7 +29,13 @@ app.use('/users', usersRouter);
 app.use('/dishes', dishRouter);
 app.use('/leaders', leaderRouter);
 app.use('/promotions', promoRouter);
-
+//database 
+const connect = mongoose.connect(process.env.DATABASE_URL);
+connect.then((db)=>{
+  console.log('Connected to DB Server');
+}, (err)=>{
+  console.log(err);
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
