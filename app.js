@@ -6,6 +6,7 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 var dotenv = require('dotenv');
 var Dishes = require('./models/dishes');
+var Promotions = require('./models/promotions');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var dishRouter = require('./routes/dishRouter');
